@@ -95,24 +95,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         child: AnimatedBuilder(
             animation: _controller,
             builder: (context, widget) {
-              int numCharsToShow =
+              final int numCharsToShow =
                   (_controller.value * textContent.length).ceil();
 
-              return Container(
+              return DecoratedBox(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           begin: Alignment.bottomLeft,
                           end: Alignment.topRight,
                           stops: [
                         _controller.value,
-                        1
+                        1,
                       ],
                           colors: [
                         Color.fromRGBO(
-                            colorRedValue, colorGreenValue, colorBlueValue, 1),
+                            colorRedValue, colorGreenValue, colorBlueValue, 1,),
                         Color.fromRGBO(prevColorRedValue, prevColorGreenValue,
-                            prevColorBlueValue, 1),
-                      ])),
+                            prevColorBlueValue, 1,),
+                      ],),),
                   child: Center(
                       child: GestureDetector(
                     onTap: rotateText,
@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                       255 - colorRedValue,
                                       255 - colorGreenValue,
                                       255 - colorBlueValue,
-                                      1),
+                                      1,),
                                   fontSize: 28,
                                   fontWeight: FontWeight.w500,
                                   shadows: const [
@@ -138,12 +138,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                       blurRadius: 5.0,
                                       color: Color.fromRGBO(0, 0, 0, 0.6),
                                     ),
-                                  ]),
+                                  ],),
                             ),
                           );
-                        }),
-                  )));
-            }),
+                        },),
+                  ),),);
+            },),
       ),
     );
   }
