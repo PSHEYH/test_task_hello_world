@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     duration: const Duration(seconds: 1),
     vsync: this,
   );
-  
+
   final String textContent = "Hello world";
 
   int colorBlueValue = 0;
@@ -49,15 +49,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   double rotationAngle = 0;
 
-  void _randomizeColor(){
+  void _randomizeColor() {
     colorBlueValue = rng.nextInt(255);
     colorRedValue = rng.nextInt(255);
     colorGreenValue = rng.nextInt(255);
   }
 
-  void rotateText(){
+  void rotateText() {
     setState(() {
-      rotationAngle = rotationAngle == 2* pi ? 0 : 2* pi;
+      rotationAngle = rotationAngle == 2 * pi ? 0 : 2 * pi;
     });
   }
 
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     _controller.addListener(() {
-      if(_controller.value > 0.95){
+      if (_controller.value > 0.95) {
         prevColorBlueValue = colorBlueValue;
         prevColorGreenValue = colorGreenValue;
         prevColorRedValue = colorRedValue;
@@ -93,46 +93,57 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       body: GestureDetector(
         onTap: changeColor,
         child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, widget) {
-            int numCharsToShow =
-            (_controller.value * textContent.length).ceil();
-            
-            return Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    stops:  [
-                      _controller.value,
-                      1
-                    ],
-                    colors: [
-                  Color.fromRGBO(colorRedValue, colorGreenValue, colorBlueValue, 1),
-                      Color.fromRGBO(prevColorRedValue, prevColorGreenValue, prevColorBlueValue, 1),
-                ])
-              ),
-              child: Center(child: GestureDetector(
-                onTap: rotateText,
-                child: TweenAnimationBuilder(
-                  tween: Tween<double>(begin: 0, end: rotationAngle),
-                  duration: const Duration(milliseconds: 1500),
-                  builder: (context, angle, widget) {
-                    return Transform.rotate(
-                      angle: angle,
-                      child: Text(textContent.substring(0, numCharsToShow), style: TextStyle(color: Color.fromRGBO(255 - colorRedValue, 255 - colorGreenValue, 255 - colorBlueValue, 1), fontSize: 28, fontWeight: FontWeight.w500, shadows: const [
-                         Shadow(
-                        offset: Offset(3.0, 0.0),
-                        blurRadius: 5.0,
-                        color: Color.fromRGBO(0, 0, 0, 0.6),
-                      ),]),),
-                    );
-                  }
-                ),
-              ))
-            );
-          }
-        ),
+            animation: _controller,
+            builder: (context, widget) {
+              int numCharsToShow =
+                  (_controller.value * textContent.length).ceil();
+
+              return Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          stops: [
+                        _controller.value,
+                        1
+                      ],
+                          colors: [
+                        Color.fromRGBO(
+                            colorRedValue, colorGreenValue, colorBlueValue, 1),
+                        Color.fromRGBO(prevColorRedValue, prevColorGreenValue,
+                            prevColorBlueValue, 1),
+                      ])),
+                  child: Center(
+                      child: GestureDetector(
+                    onTap: rotateText,
+                    child: TweenAnimationBuilder(
+                        tween: Tween<double>(begin: 0, end: rotationAngle),
+                        duration: const Duration(milliseconds: 1500),
+                        builder: (context, angle, widget) {
+                          return Transform.rotate(
+                            angle: angle,
+                            child: Text(
+                              textContent.substring(0, numCharsToShow),
+                              style: TextStyle(
+                                  color: Color.fromRGBO(
+                                      255 - colorRedValue,
+                                      255 - colorGreenValue,
+                                      255 - colorBlueValue,
+                                      1),
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w500,
+                                  shadows: const [
+                                    Shadow(
+                                      offset: Offset(3.0, 0.0),
+                                      blurRadius: 5.0,
+                                      color: Color.fromRGBO(0, 0, 0, 0.6),
+                                    ),
+                                  ]),
+                            ),
+                          );
+                        }),
+                  )));
+            }),
       ),
     );
   }
